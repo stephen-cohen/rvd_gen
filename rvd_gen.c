@@ -81,7 +81,7 @@ int get_nucl_seq(char *nucl_seq)
 {
 	int i,c;
 	printf("Enter nucleotide sequence: ");
-	for (i = 0; (c = getchar()) != '\n' && i < LIMIT; i++)
+	for (i = 0; (c = getchar()) != '\n' && i < LIMIT - 1; i++)
 		*(nucl_seq+i) = c;
 	*(nucl_seq+i) = '\0';
 	return i;
