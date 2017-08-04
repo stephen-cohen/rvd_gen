@@ -64,9 +64,10 @@ int main(int argc, char **argv)
 			return 1;
 		}
 	}
-	/* convert to lowercase */
+	/* convert to lowercase */	
 	lowercase(nucl_seq, length);	
 	/* strengthen the sequence to optimize TALE binding */
+	
 	str_seq(nucl_seq, length);
 	/* generate an RVD sequence given the strengthened sequence */
 	gen_rvd_seq(nucl_seq, length, rvd_seq);
@@ -100,8 +101,11 @@ void lowercase(char *nucl_seq, int length)
 /* strengthen sequence to ensure no stretches of >5 weak RVDs if possible */
 void str_seq(char *nucl_seq, int length)
 {
-	int i, j, weak_counter = 0;
+	int i;
+	int j;
+	int weak_counter = 0;
 	char c;
+	
 	for (i = 0; i < length; i++) {
 		if (*(nucl_seq+i) == 'c' || *(nucl_seq+i) == 'r')
 			weak_counter = 0;
@@ -113,7 +117,7 @@ void str_seq(char *nucl_seq, int length)
 		if (weak_counter >= 5) {
 			for (j = i; j >= 0; j--) {
 				c = *(nucl_seq+j);
-				if (c != 't' && c != 'c') {
+				if (c == 'a' || c == 'g') {
 					*(nucl_seq+j) = 'r';
 					weak_counter = i - j;
 					break;
