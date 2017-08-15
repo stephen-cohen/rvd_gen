@@ -114,7 +114,7 @@ void str_seq(char *nucl_seq, int length)
 
 		/* if there are more than 5 weak RVDs, try to change to R *
                  * for NN (a strong RVD)                                  */
-		if (weak_counter >= 5) {
+		if (weak_counter >= 6) {
 			for (j = i; j >= 0; j--) {
 				c = *(nucl_seq+j);
 				if (c == 'a' || c == 'g') {
