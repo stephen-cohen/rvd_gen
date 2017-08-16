@@ -63,7 +63,7 @@ In the case of sequences that would lead to stretches of 6 or more weak RVDs,
 the program uses NN for binding to A or G to break up the weak stretches, based
 on recommendations from Streubel et al. [2]. This “weakness limit” can be
 altered in the source code (rvd_gen.c, line 117), and future versions may allow
-for command line arguments for user options. Input sequences with stretches of 5
+for command line arguments for user options. Input sequences with stretches of 6
 or more Ts can not be strengthened and should be avoided as EBEs.
 
 A user may force usage of the RVD NN by using the nucleotide symbol R:
