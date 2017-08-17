@@ -16,16 +16,16 @@ tool (for installation of git, see the developer website at
 https://git-scm.com/downloads). To install rvd_gen, use git to clone the
 distribution, then use make to compile, like so:
 
-    ~$ git clone https://github.com/stephen­cohen/rvd_gen
+    ~$ git clone https://github.com/stephen-cohen/rvd_gen
     Cloning into 'rvd_gen'...
     remote: Counting objects: 13, done.
     remote: Compressing objects: 100% (9/9), done.
-    remote: Total 13 (delta 5), reused 11 (delta 3), pack­reused 0
+    remote: Total 13 (delta 5), reused 11 (delta 3), pack-reused 0
     Unpacking objects: 100% (13/13), done.
     Checking connectivity... done.
     ~$ cd rvd_gen
     ~/rvd_gen$ make
-    cc ­O3 ­Wall ­o rvd_gen rvd_gen.c
+    cc -O3 -Wall -o rvd_gen rvd_gen.c
 
 The binary file is rvd_gen, which can be run directly or copied to a bin
 directory for easy access (e.g. ~/bin for a single user).
@@ -36,10 +36,10 @@ To use rvd_gen, you must supply a nucleotide sequence. The sequence may be
 supplied as a command line argument or as input:
 
     ~/rvd_gen$ ./rvd_gen ACGTACGTACGTACGT
-    NI­-HD-­NK-­NG-­NI-­HD-­NK-­NG-­NI-­HD-­NK-­NG-­NI-­HD-­NK-­NG
+    NI-HD-NK-NG-NI-HD-NK-NG-NI-HD-NK-NG-NI-HD-NK-NG
     ~/rvd_gen$ ./rvd_gen
     Enter nucleotide sequence: ACGTACGTACGTACGT
-    NI­-HD-­NK-­NG-­NI-­HD-­NK-­NG-­NI-­HD-­NK-­NG-­NI-­HD-­NK-­NG
+    NI-HD-NK-NG-NI-HD-NK-NG-NI-HD-NK-NG-NI-HD-NK-NG
 
 By default, the maximum sequence length allowed is 41. This limit can be raised
 by altering the source code (rvd_gen.c, line 41), but most available dTALE
@@ -69,9 +69,9 @@ or more Ts can not be strengthened and should be avoided as EBEs.
 A user may force usage of the RVD NN by using the nucleotide symbol R:
 
     ~/rvd_gen$ ./rvd_gen AAAAAA
-    NI-­NI-­NI-­NI-­NI-­NN
+    NI-NI-NI-NI-NI-NN
     ~/rvd_gen$ ./rvd_gen ARAAAA
-    NI­-NN­-NI­-NI­-NI­-NI
+    NI-NN-NI-NI-NI-NI
 
 Uninterpretable input returns “??” in place of valid RVDs.
 
