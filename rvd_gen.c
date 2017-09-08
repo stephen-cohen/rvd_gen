@@ -37,25 +37,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* maximum size of input */
+/* This is used to set input maximum length. */
 #define LIMIT 41
 
-/* function prototypes and main function */
-int get_nucl_seq(char *nucl_seq);
-void lowercase(char *nucl_seq, int length);
-void str_seq(char *nucl_seq, int length);
-void gen_rvd_seq(char *nucl_seq, int length, char *rvd_seq);
+static void	 gen_rvd_seq(char *nucl_seq, int length, char *rvd_seq);
+static int	 get_nucl_seq(char *nucl_seq);
+static void	 lowercase(char *nucl_seq, int length);
+static void	 str_seq(char *nucl_seq, int length);
 
-int main(int argc, char **argv)
+/*
+ * Generate a designer TAL effector RVD sequence from a user-provided nucleotide
+ * sequence.
+ */
+int
+main(int argc, char *argv[])
 {
 	int length;
 	char nucl_seq[LIMIT], rvd_seq[LIMIT*3];
 
-	/* if there are no arguments, get a nucleotide sequence from user */
-	if(argc == 1) {
+	/*
+	 * If there are no arguments, get a nucleotide sequence from user.
+	 * Otherwise, try to copy the first argument
+	 */
+	if (argc == 1)
 		length = get_nucl_seq(nucl_seq);
-	/* or try to copy the first argument */
-	} else {
+	else {
 		if (strlen(*(argv+1)) < LIMIT) {
 			strcpy(nucl_seq, *(argv+1));
 			length = strlen(nucl_seq);
@@ -77,19 +83,52 @@ int main(int argc, char **argv)
 	return 0;
 }
 
-/* get nucleotide sequence from user input and return length */
-int get_nucl_seq(char *nucl_seq)
+/* generate an RVD sequence from a strengthened sequence */
+static void
+gen_rvd_seq(char *nucl_seq, int length, char *rvd_seq)
 {
-	int i,c;
+	int i;
+	*rvd_seq = '\0';
+	for (i = 0; i < length; i++) {
+		switch (*(nucl_seq+i)) {
+		case 'a':
+			strcat(rvd_seq, "NI-");
+			break;
+		case 'c':
+			strcat(rvd_seq, "HD-");
+			break;
+		case 'g':
+			strcat(rvd_seq, "NK-");
+			break;
+		case 't':
+			strcat(rvd_seq, "NG-");
+			break;
+		case 'r':
+			strcat(rvd_seq, "NN-");
+			break;
+		default:
+			/* escape sequence required to disrupt trigraph */
+			strcat(rvd_seq, "?\?-");
+		}
+	}
+	/* remove trailing hyphen */
+	rvd_seq[length*3-1] = '\0';
+}
+
+/* get nucleotide sequence from user input and return length */
+static int
+get_nucl_seq(char *nucl_seq)
+{
+	int i, c;
 	printf("Enter nucleotide sequence: ");
 	for (i = 0; (c = getchar()) != '\n' && i < LIMIT - 1; i++)
 		*(nucl_seq+i) = c;
 	*(nucl_seq+i) = '\0';
 	return i;
 }
-
 /* make nucleotide sequence all lowercase */
-void lowercase(char *nucl_seq, int length)
+static void
+lowercase(char *nucl_seq, int length)
 {
 	int i;
 	for (i = 0; i < length; i++) {
@@ -99,13 +138,13 @@ void lowercase(char *nucl_seq, int length)
 }
 
 /* strengthen sequence to ensure no stretches of >5 weak RVDs if possible */
-void str_seq(char *nucl_seq, int length)
+static void
+str_seq(char *nucl_seq, int length)
 {
-	int i;
-	int j;
-	int weak_counter = 0;
+	int i, j, weak_counter;
 	char c;
 	
+	weak_counter = 0;
 	for (i = 0; i < length; i++) {
 		if (*(nucl_seq+i) == 'c' || *(nucl_seq+i) == 'r')
 			weak_counter = 0;
@@ -125,35 +164,4 @@ void str_seq(char *nucl_seq, int length)
 			}
 		}
 	}
-}
-
-/* generate an RVD sequence from a strengthened sequence */
-void gen_rvd_seq(char *nucl_seq, int length, char *rvd_seq)
-{
-	int i;
-	*rvd_seq = '\0';
-	for (i = 0; i < length; i++) {
-		switch(*(nucl_seq+i)) {
-			case 'a':
-				strcat(rvd_seq, "NI-");
-				break;
-			case 'c':
-				strcat(rvd_seq, "HD-");
-				break;
-			case 'g':
-				strcat(rvd_seq, "NK-");
-				break;
-			case 't':
-				strcat(rvd_seq, "NG-");
-				break;
-			case 'r':
-				strcat(rvd_seq, "NN-");
-				break;
-			default:
-				/* escape sequence used to disrupt trigraph */
-				strcat(rvd_seq, "?\?-");
-		}
-	}
-	/* get rid of trailing hyphen */
-	rvd_seq[length*3-1] = '\0';
 }
