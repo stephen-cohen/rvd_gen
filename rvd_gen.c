@@ -1,7 +1,7 @@
 /*
  * rvd_gen.c -	Generate a designer TAL effector RVD sequence from a given
  *		nucleotide sequence
- * 
+ *
  * VERSION 1.0 Release - 2017-Aug-03
  *
  * Copyright (c) 2017, Stephen P. Cohen
@@ -9,7 +9,7 @@
  *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
- * 
+ *
  *  * Redistributions of source code must retain the above copyright notice,
  *    this list of conditions and the following disclaimer.
  *  * Redistributions in binary form must reproduce the above copyright
@@ -18,7 +18,7 @@
  *  * Neither the name of nor the names of its contributors may be used to
  *    endorse or promote products derived from this software without specific
  *    prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
  * AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
  * IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
@@ -70,10 +70,10 @@ main(int argc, char *argv[])
 			return 1;
 		}
 	}
-	/* convert to lowercase */	
-	lowercase(nucl_seq, length);	
+	/* convert to lowercase */
+	lowercase(nucl_seq, length);
 	/* strengthen the sequence to optimize TALE binding */
-	
+
 	str_seq(nucl_seq, length);
 	/* generate an RVD sequence given the strengthened sequence */
 	gen_rvd_seq(nucl_seq, length, rvd_seq);
@@ -120,7 +120,6 @@ static int
 get_nucl_seq(char *nucl_seq)
 {
 	int i, c;
-	printf("Enter nucleotide sequence: ");
 	for (i = 0; (c = getchar()) != '\n' && i < LIMIT - 1; i++)
 		*(nucl_seq+i) = c;
 	*(nucl_seq+i) = '\0';
@@ -143,7 +142,7 @@ str_seq(char *nucl_seq, int length)
 {
 	int i, j, weak_counter;
 	char c;
-	
+
 	weak_counter = 0;
 	for (i = 0; i < length; i++) {
 		if (*(nucl_seq+i) == 'c' || *(nucl_seq+i) == 'r')

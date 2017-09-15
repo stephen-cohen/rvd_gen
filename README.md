@@ -4,69 +4,67 @@
 
 rvd_gen is a command line tool that can be used to generate a designer TAL
 effector RVD sequence from a given nucleotide sequence. Because rvd_gen is
-written in C, it should run on any modern UNIX-like operating system, and has
-been tested on Elementary OS (Linux kernel 4.4.0-66-generic) and FreeBSD
-(11.0-RELEASE-p1 GENERIC). rvd_gen is Copyright (c) 2017, Stephen P. Cohen and
-is distributed under a permissive 3-clause license (see below for license terms)
+written in C, it should run on any modern UNIX-like operating system with little
+to no modification. It has been tested on Elementary OS (Linux kernel
+4.4.0-66-generic) and FreeBSD (11.0-RELEASE-p1 GENERIC). rvd_gen is
+Copyright (c) 2017, Stephen P. Cohen (see the end of this document for license
+terms)
 
 ### Installation Instructions
 
-rvd_gen can be cloned directly from github for free using the git command line
-tool (for installation of git, see the developer website at
+rvd_gen can be installed by cloning from github using the git command line tool
+(for installation of git, see the developer website at
 https://git-scm.com/downloads). To install rvd_gen, use git to clone the
-distribution, then use make to compile, like so:
+distribution, then use make to compile, as below:
 
     ~$ git clone https://github.com/stephen-cohen/rvd_gen
     Cloning into 'rvd_gen'...
-    remote: Counting objects: 13, done.
-    remote: Compressing objects: 100% (9/9), done.
-    remote: Total 13 (delta 5), reused 11 (delta 3), pack-reused 0
-    Unpacking objects: 100% (13/13), done.
     Checking connectivity... done.
     ~$ cd rvd_gen
     ~/rvd_gen$ make
     cc -O3 -Wall -o rvd_gen rvd_gen.c
 
-The binary file is rvd_gen, which can be run directly or copied to a bin
-directory for easy access (e.g. ~/bin for a single user).
+The output binary file is rvd_gen, which can be run directly or copied to a
+directory in $PATH (e.g. ~/bin for a single user, or /usr/bin in Linux for
+multiple users) for easy access.
 
 ### Usage Instructions
 
 To use rvd_gen, you must supply a nucleotide sequence. The sequence may be
-supplied as a command line argument or as input:
+supplied as a command line argument or as input, as below:
 
     ~/rvd_gen$ ./rvd_gen ACGTACGTACGTACGT
     NI-HD-NK-NG-NI-HD-NK-NG-NI-HD-NK-NG-NI-HD-NK-NG
     ~/rvd_gen$ ./rvd_gen
-    Enter nucleotide sequence: ACGTACGTACGTACGT
+    ACGTACGTACGTACGT
     NI-HD-NK-NG-NI-HD-NK-NG-NI-HD-NK-NG-NI-HD-NK-NG
 
-By default, the maximum sequence length allowed is 41. This limit can be raised
-by altering the source code (rvd_gen.c, line 41), but most available dTALE
-construction kits do not allow target sequences to be larger than ~30. There is
-no minimum input for the program.
+By default, the maximum sequence length allowed is 41, because most available
+dTALE construction kits do not allow target sequences to be larger than ~30.
+Source code (rvd_gen.c, line 41) may be altered to raise or lower this limit.
+There is no minimum input for the program. Input may be upper- and/or lowercase.
 
 ### About the Program
 
 This program generates an optimal TAL effector RVD sequence given a nucleotide
-sequence. It uses the following RVDs for DNA-binding, which are available in
-modules from the dTALE construction kit made available by Cermak et al. [1]:
+sequence. The following nucleotide-RVD pairs are used by rvd_gen, which are
+available in modules from the dTALE construction kit made available by
+Cermak et al. [1]:
 
-| Nucleotide | RVD | Strength[2] |
-|:----------:|:---:|:-----------:|
-|     A      | NI  | weak        |
-|     C      | HD  | strong      |
-|     G      | NK  | weak        |
-|     T      | NG  | weak        |
+| Nucleotide (s) | RVD | Strength[2] |
+|:--------------:|:---:|:-----------:|
+|       A        | NI  | weak        |
+|       C        | HD  | strong      |
+|       G        | NK  | weak        |
+|       T        | NG  | weak        |
+|      A/G       | NN  | strong      |
      
 In the case of sequences that would lead to stretches of 6 or more weak RVDs,
 the program uses NN for binding to A or G to break up the weak stretches, based
-on recommendations from Streubel et al. [2]. This “weakness limit” can be
-altered in the source code (rvd_gen.c, line 117), and future versions may allow
-for command line arguments for user options. Input sequences with stretches of 6
+on recommendations from Streubel et al. [2]. Input sequences with stretches of 6
 or more Ts can not be strengthened and should be avoided as EBEs.
 
-A user may force usage of the RVD NN by using the nucleotide symbol R:
+A user may force usage of the RVD NN by using the nucleotide symbol R, as below:
 
     ~/rvd_gen$ ./rvd_gen AAAAAA
     NI-NI-NI-NI-NI-NN
