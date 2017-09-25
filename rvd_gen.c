@@ -53,7 +53,7 @@ int
 main(int argc, char *argv[])
 {
 	int length;
-	char nucl_seq[LIMIT], rvd_seq[LIMIT*3];
+	char nucl_seq[LIMIT+1], rvd_seq[(LIMIT+1)*3];
 
 	/*
 	 * If there are no arguments, get a nucleotide sequence from user.
@@ -62,7 +62,7 @@ main(int argc, char *argv[])
 	if (argc == 1)
 		length = get_nucl_seq(nucl_seq);
 	else {
-		if (strlen(*(argv+1)) < LIMIT) {
+		if (strlen(*(argv+1)) <= LIMIT) {
 			strcpy(nucl_seq, *(argv+1));
 			length = strlen(nucl_seq);
 		} else {
@@ -120,7 +120,7 @@ static int
 get_nucl_seq(char *nucl_seq)
 {
 	int i, c;
-	for (i = 0; (c = getchar()) != '\n' && i < LIMIT - 1; i++)
+	for (i = 0; (c = getchar()) != '\n' && i < LIMIT; i++)
 		*(nucl_seq+i) = c;
 	*(nucl_seq+i) = '\0';
 	return i;
