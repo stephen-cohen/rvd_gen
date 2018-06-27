@@ -2,9 +2,9 @@
  * rvd_gen.c -	Generate a designer TAL effector RVD sequence from a given
  *		nucleotide sequence
  *
- * VERSION 1.0 Release - 2017-Aug-03
+ * VERSION 1.1 Release - 2018-Jun-27
  *
- * Copyright (c) 2017, Stephen P. Cohen
+ * Copyright (c) 2017-2018, Stephen P. Cohen
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
