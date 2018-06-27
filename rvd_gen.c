@@ -92,23 +92,23 @@ gen_rvd_seq(char *nucl_seq, int length, char *rvd_seq)
 	for (i = 0; i < length; i++) {
 		switch (*(nucl_seq+i)) {
 		case 'a':
-			strcat(rvd_seq, "NI-");
+			strcat(rvd_seq, "NI ");
 			break;
 		case 'c':
-			strcat(rvd_seq, "HD-");
+			strcat(rvd_seq, "HD ");
 			break;
 		case 'g':
-			strcat(rvd_seq, "NK-");
+			strcat(rvd_seq, "NK ");
 			break;
 		case 't':
-			strcat(rvd_seq, "NG-");
+			strcat(rvd_seq, "NG ");
 			break;
 		case 'r':
-			strcat(rvd_seq, "NN-");
+			strcat(rvd_seq, "NN ");
 			break;
 		default:
 			/* escape sequence required to disrupt trigraph */
-			strcat(rvd_seq, "?\?-");
+			strcat(rvd_seq, "?\? ");
 		}
 	}
 	/* remove trailing hyphen */
